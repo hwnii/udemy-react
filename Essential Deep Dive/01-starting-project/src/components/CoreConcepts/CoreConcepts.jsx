@@ -7,8 +7,8 @@ export default function CoreConcepts() {
     <Section id='core-concepts'>
       <h2>Core Concepts</h2>
       <ul>
-        {CORE_CONCEPTS.map((conceptItem) => (
-          <CoreConcept {...conceptItem} />
+        {CORE_CONCEPTS.map((conceptItem, cnt) => (
+          <CoreConcept key={cnt} {...conceptItem} />
         ))}
       </ul>
     </Section>

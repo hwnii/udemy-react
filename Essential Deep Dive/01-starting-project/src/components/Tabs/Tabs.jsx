@@ -1,4 +1,4 @@
-export default function Tabs({ buttons, children }) {
+export default function Tabs({ children, buttons }) {
   return (
     <>
       <menu>{buttons}</menu>
