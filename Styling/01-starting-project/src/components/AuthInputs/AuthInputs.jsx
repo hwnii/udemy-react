@@ -1,24 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
+import './AuthInputs.css';
 
 export default function AuthInputs() {
-  const [enteredEmail, setEnteredEmail] = useState('');
-  const [enteredPassword, setEnteredPassword] = useState('');
+  const [enteredInput, setEnteredInput] = useState({
+    email: '',
+    password: '',
+  });
   const [submitted, setSubmitted] = useState(false);
 
   function handleInputChange(identifier, value) {
-    if (identifier === 'email') {
-      setEnteredEmail(value);
-    } else {
-      setEnteredPassword(value);
-    }
+    setEnteredInput((prevInput) => ({
+      ...prevInput,
+      [identifier]: value,
+    }));
   }
 
   function handleLogin() {
     setSubmitted(true);
   }
 
-  const emailNotValid = submitted && !enteredEmail.includes('@');
-  const passwordNotValid = submitted && enteredPassword.trim().length < 6;
+  const emailNotValid = submitted && !enteredInput['email'].includes('@');
+  const passwordNotValid =
+    submitted && enteredInput['password'].trim().length < 6;
 
   return (
     <div id='auth-inputs'>
@@ -42,6 +46,7 @@ export default function AuthInputs() {
           />
         </p>
       </div>
+      <p>Some text</p>
       <div className='actions'>
         <button type='button' className='text-button'>
           Create a new account
