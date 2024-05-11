@@ -1,16 +1,23 @@
 import { calculateInvestmentResults, formatter } from '../util/investment.js';
 
+// const results = []; // 초기에 한 번 생성되고 상태가 변경될 때 이 배열은 다시 실행되지 않고 여전히 한 번만 실행된다.
 
 export default function Results({ input }) {
   const results = [];
+
   calculateInvestmentResults(input, results);
+
+  if (results.length === 0) {
+    return <p className='center'>Invalid input data provided.</p>;
+  }
+
   const initialInvestment =
     results[0].valueEndOfYear -
     results[0].interest -
     results[0].annualInvestment;
 
   return (
-    <table id="result">
+    <table id='result'>
       <thead>
         <tr>
           <th>Year</th>
