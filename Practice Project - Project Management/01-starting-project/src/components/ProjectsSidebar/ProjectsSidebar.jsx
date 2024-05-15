@@ -15,29 +15,31 @@ export default function ProjectsSidebar({
         <div>
           <Button onClick={onStartAddPoejct}>+ Add Project</Button>
         </div>
-        <ul>
-          {projects.map((project) => {
-            let cssClasses =
-              'w-full text-left px-2 py-1 rounded-sm my-1 text-stone-400 hover:text-stone-200 hover:bg-stone-800'
+        {projects.length > 0 && (
+          <ul>
+            {projects.map((project) => {
+              let cssClasses =
+                'w-full text-left px-2 py-1 rounded-sm my-1 text-stone-400 hover:text-stone-200 hover:bg-stone-800'
 
-            if (project.id === selectedProject) {
-              cssClasses += ' bg-stone-800 text-stone-200'
-            } else {
-              cssClasses += ' text-stone-400'
-            }
+              if (project.id === selectedProject) {
+                cssClasses += ' bg-stone-800 text-stone-200'
+              } else {
+                cssClasses += ' text-stone-400'
+              }
 
-            return (
-              <li key={project.id}>
-                <button
-                  className={cssClasses}
-                  onClick={() => onSelectProject(project.id)}
-                >
-                  {project.title}
-                </button>
-              </li>
-            )
-          })}
-        </ul>
+              return (
+                <li key={project.id}>
+                  <button
+                    className={cssClasses}
+                    onClick={() => onSelectProject(project.id)}
+                  >
+                    {project.title}
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
+        )}
       </aside>
     </>
   )

@@ -10,7 +10,33 @@ function App() {
     // undefined 값은 추가한 새 프로젝트가 없거나 아무 프로젝트도 선택하지 않았을 때 사용
     selectedProject: undefined,
     projects: [],
+    tasks: [],
   })
+
+  function handleAddTask(text) {
+    setProjectsState((prevState) => {
+      const taskId = Math.random()
+      const newTask = {
+        text,
+        projectId: prevState.selectedProject,
+        id: taskId,
+      }
+
+      return {
+        ...prevState,
+        tasks: [...prevState.tasks, newTask],
+      }
+    })
+  }
+
+  function handleDeleteTask(id) {
+    setProjectsState((prevState) => {
+      return {
+        ...prevState,
+        tasks: prevState.tasks.filter((task) => task.id !== id),
+      }
+    })
+  }
 
   function handleSelectProject(id) {
     setProjectsState((prevState) => {
@@ -25,6 +51,11 @@ function App() {
     setProjectsState((prevState) => {
       return {
         ...prevState,
+        selectedProject: undefined,
+        projects: prevState.projects.filter(
+          // prevState에 selected project id가 있으므로 입력값을 받지 않아도 된다.
+          (project) => project.id !== prevState.selectedProject,
+        ),
       }
     })
   }
@@ -67,7 +98,15 @@ function App() {
     (project) => project.id === projectsState.selectedProject,
   )
 
-  let content = <SelectedProject project={selectedProject} />
+  let content = (
+    <SelectedProject
+      project={selectedProject}
+      onDelete={handleDeleteProject}
+      onAddTask={handleAddTask}
+      onDeleteTask={handleDeleteTask}
+      tasks={projectsState.tasks}
+    />
+  )
 
   if (projectsState.selectedProject === null) {
     content = (
