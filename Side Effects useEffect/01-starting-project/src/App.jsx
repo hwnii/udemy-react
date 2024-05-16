@@ -1,15 +1,30 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import Places from './components/Places.jsx'
 import { AVAILABLE_PLACES } from './data.js'
 import Modal from './components/Modal.jsx'
 import DeleteConfirmation from './components/DeleteConfirmation.jsx'
 import logoImg from './assets/logo.png'
+import { sortPlacesByDistance } from './loc.js'
 
 function App() {
   const modal = useRef()
   const selectedPlace = useRef()
+  const [availablePlaces, setAvailablePlaces] = useState([])
   const [pickedPlaces, setPickedPlaces] = useState([])
+
+  useEffect(() => {
+    // 현재 위치에서 가까운 지역을 우선으로 보여주는 sort 기능 구현
+    navigator.geolocation.getCurrentPosition((position) => {
+      const sortedPlaces = sortPlacesByDistance(
+        AVAILABLE_PLACES,
+        position.coords.latitude,
+        position.coords.longitude,
+      )
+
+      setAvailablePlaces(sortedPlaces)
+    })
+  }, [])
 
   function handleStartRemovePlace(id) {
     modal.current.open()
@@ -63,7 +78,8 @@ function App() {
         />
         <Places
           title='Available Places'
-          places={AVAILABLE_PLACES}
+          places={availablePlaces}
+          fallbackText='장소를 거리순으로 정렬합니다.'
           onSelectPlace={handleSelectPlace}
         />
       </main>
