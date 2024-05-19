@@ -1,4 +1,4 @@
-import quizLogoImg from './assets/quiz-logo.png'
+import quizLogoImg from '../assets/quiz-logo.png'
 
 export default function Header() {
   return (
