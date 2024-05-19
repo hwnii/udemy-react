@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import QUESTIONS from '../questions'
 
@@ -23,8 +23,7 @@ export default function Quiz() {
     setUserAnswers((prevUserAnswers) => {
       return [...prevUserAnswers, selectedAnswer]
     })
-  },
-  [])
+  }, [])
 
   const handleSkipAnswer = useCallback(
     () => handleSelectAnswer(null),
@@ -47,8 +46,9 @@ export default function Quiz() {
     <div id='quiz'>
       <div id='question'>
         <QuestionTimer
+          key={activeQuestionIndex}
           timeout={10000}
-          onTimeout={handleSkipAnswer} //null이여도 배열은 채우기 때문에
+          onTimeout={handleSkipAnswer}
         />
         <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
         <ul id='answers'>
